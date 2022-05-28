@@ -6,12 +6,21 @@ import schemas as _schemas
 
 app = FastAPI()
 
+orders=[]
+
 @app.post('/orders')
 async def create_order(request: Request): #id, quantity
-    print('POST order request')
     body = await request.json()
-    print(body['id'])
-    r = requests.get('http://localhost:8000/products/%s' % body['id'])
+    r = requests.get('http://localhost:8000/products/%s' % body['product_id'])
     prod = r.json()
 
-    return 
+    order = _schemas.Order(
+        product_id=body['product_id'],
+        price=prod['price'],
+        fee=0.2*prod['price'],
+        total=1.2*prod['price'],
+        quantity=body['quantity'],
+        status='pending'
+    )
+    orders.append(order)
+    return order
