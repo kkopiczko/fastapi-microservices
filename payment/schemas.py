@@ -1,14 +1,15 @@
 from pydantic import BaseModel
 
-class OrderCreate(BaseModel):
-    id: int
+class OrderBase(BaseModel):
+    product_id: int
     quantity: int
 
-class Order(BaseModel):
-    product_id: str
+class OrderCreate(OrderBase):
+    pass
+
+class Order(OrderBase):
     price: float
     fee: float
     total: float
-    quantity: int
     status: str #pending, completed, refunded
 

@@ -12,5 +12,6 @@ async def create_order(request: Request): #id, quantity
     body = await request.json()
     print(body['id'])
     r = requests.get('http://localhost:8000/products/%s' % body['id'])
+    prod = r.json()
 
-    return r.json()
+    return 
