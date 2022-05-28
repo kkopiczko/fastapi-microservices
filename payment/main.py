@@ -30,4 +30,10 @@ async def create_order(request: Request): #id, quantity
         status='pending'
     )
     orders.append(order)
-    return prod
+    order_completed(order)
+    return order
+
+def order_completed(ord):
+    for o in orders:
+        if o.product_id == ord.product_id:
+            o.status = 'completed'
